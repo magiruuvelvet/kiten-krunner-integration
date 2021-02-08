@@ -5,6 +5,10 @@
 #include <QClipboard>
 #include <QGuiApplication>
 
+#ifdef DEBUG_BUILD
+#include <QDebug>
+#endif
+
 #include <KLocalizedString>
 
 #include <libkiten/dictionarymanager.h>
@@ -27,6 +31,7 @@ KitenRunner::KitenRunner(QObject *parent, const QVariantList &args)
     );
 
     const QString description = i18n("Queries the Kiten dictionary");
+    this->setPriority(AbstractRunner::HighestPriority);
     this->addSyntax(Plasma::RunnerSyntax(QStringLiteral("kiten :q:"), description));
 
     this->addAction(QStringLiteral("copyToClipboard"), QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy to Clipboard"));
@@ -52,13 +57,19 @@ void KitenRunner::match(Plasma::RunnerContext &context)
 
     // check if the kiten command exists, or abort
     const QString term = context.query().trimmed();
+#ifdef DEBUG_BUILD
+    qDebug() << "kiten command term: " << term;
+#endif
     if (!term.startsWith(m_keyword))
     {
         return;
     }
 
     // extract the query from the command
-    const QString query = term.mid(m_keyword.size() + 1);
+    const QString query = term.mid(m_keyword.size()).trimmed();
+#ifdef DEBUG_BUILD
+    qDebug() << "kiten command query" << query;
+#endif
 
     // don't attempt to query an empty string
     if (query.isEmpty())
@@ -68,7 +79,7 @@ void KitenRunner::match(Plasma::RunnerContext &context)
 
     // do the Kiten dictionary search and add one match for each item
     DictQuery dictQuery(query);
-    dictQuery.setMatchType(DictQuery::Anywhere);
+    dictQuery.setMatchType(DictQuery::Beginning);
     auto dictMatches = this->_dictionaryManager->doSearch(dictQuery);
 
     // no matches, abort
