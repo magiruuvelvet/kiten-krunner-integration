@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Kiten Dictionary Query
+Comment=Queries the Kiten dictionary
+X-KDE-ServiceTypes=Plasma/Runner
+Type=Service
+Icon=kiten
+X-KDE-PluginInfo-Author=マギルゥーベルベット
+X-KDE-PluginInfo-Name=kiten
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-License=MIT
+X-KDE-PluginInfo-EnabledByDefault=false
+X-Plasma-AdvertiseSingleRunnerQueryMode=true

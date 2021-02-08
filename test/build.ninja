@@ -1,0 +1,4 @@
+rule build
+    command = clang++ -fPIC -I/usr/include/qt5 -I/usr/include/qt5/QtCore -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtWidgets -I. $in -o $out -lQt5Core -lQt5Gui -lQt5Widgets -lkiten
+
+build test: build test.cpp
