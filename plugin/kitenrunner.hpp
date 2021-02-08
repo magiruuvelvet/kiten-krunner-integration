@@ -27,6 +27,8 @@ protected:
 private:
     bool _isSuccessfullyInitialized = false;
     std::shared_ptr<DictionaryManager> _dictionaryManager;
+
+    const QString m_keyword;
 };
 
 #endif // KITENRUNNER_HPP

@@ -14,7 +14,8 @@
 K_EXPORT_PLASMA_RUNNER_WITH_JSON(KitenRunner, "plasma-runner-kiten.json")
 
 KitenRunner::KitenRunner(QObject *parent, const QVariantList &args)
-    : Plasma::AbstractRunner(parent, args)
+    : Plasma::AbstractRunner(parent, args),
+      m_keyword(QStringLiteral("kiten"))
 {
     this->setObjectName(QStringLiteral("Kiten"));
     this->setIgnoredTypes(
@@ -49,9 +50,15 @@ void KitenRunner::match(Plasma::RunnerContext &context)
         return;
     }
 
-    // contains the query string (everything after the "kiten " part)
-    // the runner syntax already handles the actual parsing :)
-    const QString query = context.query().trimmed();
+    // check if the kiten command exists, or abort
+    const QString term = context.query().trimmed();
+    if (!term.startsWith(m_keyword + " "))
+    {
+        return;
+    }
+
+    // extract the query from the command
+    const QString query = term.mid(m_keyword.size() + 1);
 
     // don't attempt to query an empty string
     if (query.isEmpty())
@@ -79,7 +86,7 @@ void KitenRunner::match(Plasma::RunnerContext &context)
         //match.setIconName();
         match.setText(result);
         match.setData(result);
-        match.setId(query);
+        match.setId(term);
         context.addMatch(match);
     }
 }
