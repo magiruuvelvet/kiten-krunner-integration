@@ -52,7 +52,7 @@ void KitenRunner::match(Plasma::RunnerContext &context)
 
     // check if the kiten command exists, or abort
     const QString term = context.query().trimmed();
-    if (!term.startsWith(m_keyword + " "))
+    if (!term.startsWith(m_keyword))
     {
         return;
     }
