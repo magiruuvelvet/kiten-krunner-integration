@@ -89,6 +89,7 @@ void KitenRunner::match(Plasma::RunnerContext &context)
     }
 
     // iterate over all dictionary matches and create a runner item
+    qreal relevance = 1.f;
     for (auto&& dictMatch : *dictMatches)
     {
         const QString result = dictMatch->toString();
@@ -98,6 +99,8 @@ void KitenRunner::match(Plasma::RunnerContext &context)
         match.setText(result);
         match.setData(result);
         match.setId(term);
+        match.setRelevance(relevance); // first match should be on top
+        relevance = 0.f; // the remaining matches are coming afterwards
         context.addMatch(match);
     }
 }
