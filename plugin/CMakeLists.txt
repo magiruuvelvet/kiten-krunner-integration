@@ -18,6 +18,7 @@ include(KDEInstallDirs)
 #include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 find_package(KF5Runner REQUIRED)
 find_package(KF5I18n REQUIRED)
+ki18n_install(po)
 
 # Qt automoc
 message(STATUS "Enabling Qt automoc...")

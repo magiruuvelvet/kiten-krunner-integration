@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Kiten Dictionary Query
+Name[ja]=Kiten辞林の検索
 Comment=Queries the Kiten dictionary
 X-KDE-ServiceTypes=Plasma/Runner
 Type=Service

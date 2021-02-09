@@ -1,0 +1,9 @@
+#: kitenrunner.cpp:40
+#, kde-format
+msgid "Queries the Kiten dictionary"
+msgstr ""
+
+#: kitenrunner.cpp:44
+#, kde-format
+msgid "Copy to Clipboard"
+msgstr "クリップボードへのコピー"
