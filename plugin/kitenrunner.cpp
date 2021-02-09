@@ -22,6 +22,8 @@ KitenRunner::KitenRunner(QObject *parent, const QVariantList &args)
       m_keyword(QStringLiteral("kiten"))
 {
     this->setObjectName(QStringLiteral("Kiten"));
+
+#if KRUNNER_VERSION < QT_VERSION_CHECK(5, 76, 0)
     this->setIgnoredTypes(
         Plasma::RunnerContext::Directory |
         Plasma::RunnerContext::File |
@@ -29,6 +31,11 @@ KitenRunner::KitenRunner(QObject *parent, const QVariantList &args)
         Plasma::RunnerContext::Executable |
         Plasma::RunnerContext::ShellCommand
     );
+#else
+    this->setMinLetterCount(m_keyword.size());
+#endif
+
+    this->setTriggerWords({m_keyword});
 
     const QString description = i18n("Queries the Kiten dictionary");
     this->setPriority(AbstractRunner::HighestPriority);
@@ -90,6 +97,7 @@ void KitenRunner::match(Plasma::RunnerContext &context)
 
     // iterate over all dictionary matches and create a runner item
     qreal relevance = 1.f;
+    int decrease_factor = 2;
     for (auto&& dictMatch : *dictMatches)
     {
         const QString result = dictMatch->toString();
@@ -100,9 +108,13 @@ void KitenRunner::match(Plasma::RunnerContext &context)
         match.setData(result);
         match.setId(term);
         match.setRelevance(relevance); // first match should be on top
-        relevance = 0.f; // the remaining matches are coming afterwards
+        relevance -= 0.05f * decrease_factor; // the remaining matches are coming afterwards
+        decrease_factor = 1;
         context.addMatch(match);
     }
+
+    // why 0.05? from KRunner src: RunnerContext::addMatch -> m.setRelevance(m.relevance() + 0.05 * count);
+    // negative relevance is transformed into 0.0f, relevance is limited to 1.0f
 }
 
 void KitenRunner::run(const Plasma::RunnerContext &context, const Plasma::QueryMatch &match)
