@@ -1,4 +1,3 @@
-#include <QApplication>
 #include <QtGlobal>
 #include <QStandardPaths>
 #include <cstdio>
@@ -11,7 +10,7 @@ static void silenceKitenLibraryOutput(QtMsgType type, const QMessageLogContext &
     // send output from libkiten to void
 }
 
-static inline void printfq(const QString &str)
+static inline void print_helper(const QString &str)
 {
     std::printf("%s\n", str.toStdString().c_str());
 }
@@ -19,8 +18,8 @@ static inline void printfq(const QString &str)
 int main(int argc, char **argv)
 {
     qInstallMessageHandler(silenceKitenLibraryOutput);
-    QApplication a(argc, argv);
 
+    // parse dictionary
     DictionaryManager manager;
     const QString dictType = "edict";
     const QString dictionary = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral( "kiten/" ) + dictType);
@@ -35,19 +34,26 @@ int main(int argc, char **argv)
 
     if (argc > 1)
     {
-        queryString = QString::fromUtf8(argv[1]);
+        queryString = QString::fromUtf8(argv[1]).trimmed();
+    }
+
+    if (queryString.isEmpty())
+    {
+        return 2;
     }
 
     DictQuery query(queryString);
     query.setMatchType(DictQuery::Anywhere);
     auto list = manager.doSearch(query);
 
+    if (list->size() == 0)
+    {
+        return 5;
+    }
+
     for (auto&& entry : *list)
     {
-        //printfq(entry->getWord());
-        //printfq(entry->getReadings());
-        //printfq(entry->getMeanings());
-        printfq(entry->toString());
+        print_helper(entry->toString());
     }
 
     return 0;

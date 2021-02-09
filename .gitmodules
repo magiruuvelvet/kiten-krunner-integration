@@ -1,3 +1,6 @@
 [submodule "cmake/modules"]
 	path = cmake/modules
 	url = https://github.com/magiruuvelvet/shared-cmake-modules.git
+[submodule "kiten-query/reproc"]
+	path = kiten-query/reproc
+	url = https://github.com/DaanDeMeyer/reproc

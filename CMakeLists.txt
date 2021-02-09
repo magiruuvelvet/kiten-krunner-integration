@@ -72,3 +72,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # krunner plugin
 add_subdirectory(plugin)
+
+# kiten-query command
+add_subdirectory(kiten-query)
