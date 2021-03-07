@@ -26,7 +26,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 # create target after qt setup
-CreateTarget(${CURRENT_TARGET} SHARED ${CURRENT_TARGET_NAME} 17)
+CreateTarget(${CURRENT_TARGET} SHARED ${CURRENT_TARGET_NAME} C++ 17)
 
 # Qt deprecated warnings
 target_compile_definitions(${CURRENT_TARGET} PRIVATE -DQT_DEPRECATED_WARNINGS)
