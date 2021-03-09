@@ -1,8 +1,5 @@
 set(CURRENT_TARGET "krunner_kiten")
 set(CURRENT_TARGET_NAME "krunner_kiten")
-set(CURRENT_TARGET_INTERFACE "${CURRENT_TARGET}_interface")
-
-message(STATUS "Configuring ${CURRENT_TARGET}...")
 
 # Qt
 find_package(Qt5Core REQUIRED)
@@ -48,5 +45,3 @@ target_link_libraries(${CURRENT_TARGET}
 kcoreaddons_desktop_to_json(${CURRENT_TARGET} plasma-runner-kiten.desktop)
 
 install(TARGETS "${CURRENT_TARGET}" DESTINATION "${KDE_INSTALL_PLUGINDIR}/kf5/krunner")
-
-message(STATUS "Configured ${CURRENT_TARGET}.")

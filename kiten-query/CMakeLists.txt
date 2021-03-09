@@ -1,8 +1,5 @@
 set(CURRENT_TARGET "kiten_query")
 set(CURRENT_TARGET_NAME "kiten-query")
-set(CURRENT_TARGET_INTERFACE "${CURRENT_TARGET}_interface")
-
-message(STATUS "Configuring ${CURRENT_TARGET}...")
 
 # Qt
 find_package(Qt5Core REQUIRED)
@@ -57,5 +54,3 @@ target_link_libraries(kiten-query PRIVATE reproc++)
 
 install(TARGETS kiten-query DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
 install(TARGETS kiten-query-helper DESTINATION "${CMAKE_INSTALL_PREFIX}/libexec")
-
-message(STATUS "Configured ${CURRENT_TARGET}.")
